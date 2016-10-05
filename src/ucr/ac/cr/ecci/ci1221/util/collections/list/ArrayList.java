@@ -18,10 +18,10 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        if (index <= array.length) {
+        if (index <= nElements) {
             return array[index - 1];
         } else {
-            throw new IndexOutOfBoundsException("Position" + index + "does not exist.");
+            throw new IndexOutOfBoundsException();
         }
     }
 
@@ -54,11 +54,11 @@ public class ArrayList<E> implements List<E> {
                 }
                 return prevElement;
             } else {
-                throw new IndexOutOfBoundsException("Position" + index + "does not exist.");
+                throw new IndexOutOfBoundsException();
             }
         }
         else {
-            throw new NullPointerException("Can insert a null element");
+            throw new NullPointerException();
         }
     }
 
@@ -78,11 +78,11 @@ public class ArrayList<E> implements List<E> {
                 array[index - 1] = element;
                 ++nElements;
             } else {
-                throw new IndexOutOfBoundsException("Position" + index + "does not exist.");
+                throw new IndexOutOfBoundsException();
             }
         }
         else {
-          throw new NullPointerException("Can insert a null element");
+          throw new NullPointerException();
         }
     }
 
@@ -118,7 +118,7 @@ public class ArrayList<E> implements List<E> {
             return true;
         }
         else {
-            throw new NullPointerException("Can insert a null element");
+            throw new NullPointerException();
         }
     }
 
@@ -138,7 +138,7 @@ public class ArrayList<E> implements List<E> {
             return oldElement;
         }
         else {
-            throw new IndexOutOfBoundsException("Position" + index + "does not exist.");
+            throw new IndexOutOfBoundsException();
         }
     }
 
@@ -167,7 +167,7 @@ public class ArrayList<E> implements List<E> {
         private int currentPosition = -1;
 
         public boolean hasNext() {
-            return nElements > 11 && currentPosition < nElements - 1;
+            return nElements > 1 && currentPosition < nElements - 1;
         }
 
         public E next() {

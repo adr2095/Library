@@ -14,7 +14,7 @@ public class SearchAlgorithms{
     public static <T extends Comparable<? super T>> T linearSearch(List<T> list, T key){
        if(!list.isEmpty()) {
            int index = 1;
-           while (index <= list.size() && list.get(index).compareTo(key) != 0){
+           while (index <= list.size() && (char)list.get(index).compareTo(key) != 0){
                ++index;
            }
            if (index <= list.size()) {
@@ -41,9 +41,9 @@ public class SearchAlgorithms{
     private static <T extends Comparable<? super T>> T binarySearchRecursive(int inicio ,int fin, List<T> list, T key){
         int medio = (inicio + fin)/2;
         if(fin - inicio != 0) {
-            if (list.get(medio).compareTo(key) == 0)
+            if (key.compareTo(list.get(medio)) == 0)
                 return key;
-            else if (list.get(medio).compareTo(key) < 0)
+            else if (key.compareTo(list.get(medio)) < 0)
                 return binarySearchRecursive(inicio, medio - 1, list, key);
             else {
                 return binarySearchRecursive(medio + 1, fin, list, key);

@@ -16,7 +16,7 @@ public interface Stack<E> extends Collection{
      * @param   element the item to be pushed onto this stack.
      * @return  the <code>item</code> argument.
      */
-     void push(E element);
+    void push(E element);
 
     /**
      * Removes the object at the top of this stack and returns that

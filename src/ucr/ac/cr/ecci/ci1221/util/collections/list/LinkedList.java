@@ -11,7 +11,8 @@ import java.util.Iterator;
  * @author Student Name
  */
 public class LinkedList<E> implements List<E> {
-    private Node head;
+    private Node head = null;
+    public Node tail = null;
     private int nElements = 0;
 
     public LinkedList() {
@@ -42,7 +43,7 @@ public class LinkedList<E> implements List<E> {
             }
         }
         else {
-            return null;
+            throw new IndexOutOfBoundsException();
         }
     }
 
@@ -80,66 +81,80 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public E set(int index, E element) {
+        if(!isEmpty() && index <= nElements) {
+            if (element != null) {
+                Node node = head;
+                int cont = 0;
+                E oldElement = null;
 
-        Node node = head;
-        int cont = 0;
-        E oldElement = null;
+                while (node.next != null && cont != index - 1) {
+                    node = node.next;
+                    ++cont;
+                }
 
-        while (node.next != null && cont != index - 1) {
-            node = node.next;
-            ++cont;
+                if (node != null) {
+                    oldElement = node.element;
+                    node.element = (element);
+                }
+
+                return oldElement;
+            }
+            else
+            {
+                throw new NullPointerException();
+            }
         }
-
-        if (node != null) {
-            oldElement = node.element;
-            node.element = (element);
-        }
-
-        return oldElement;
+        else
+            throw new IndexOutOfBoundsException();
     }
 
     @Override
     public void add(int index, E element) {
-        if (index <= nElements) {
-            Node newNode = new Node(element);
-         if(index != 1)
-         {
-             Node tmp = head;
-             int cont = 0;
-             while(cont != (index - 1) - 1 && tmp.next != null){
-                 tmp = tmp.next;
-                 ++cont;
-             }
-             newNode.next = tmp.next;
-             tmp.next = newNode;
+        if (!isEmpty() && index <= nElements) {
+            if (element != null) {
+                Node newNode = new Node(element);
+                if (index != 1) {
+                    Node tmp = head;
+                    int cont = 0;
+                    while (cont != (index - 1) - 1 && tmp.next != null) {
+                        tmp = tmp.next;
+                        ++cont;
+                    }
+                    newNode.next = tmp.next;
+                    tmp.next = newNode;
 
-         }
-         else {
-             newNode.next = head;
-             head = newNode;
-         }
-            ++nElements;
+                } else {
+                    newNode.next = head;
+                    head = newNode;
+                }
+                ++nElements;
+            }
+            else {
+                throw new NullPointerException();
+            }
+        }else {
+             throw new IndexOutOfBoundsException("Position" + index + "does not exist.");
         }
     }
 
     @Override
     public boolean add(E e) {
-        Node newNode = new Node(e);
-        if(!isEmpty()) {
-            Node node = head;
-
-            while (node.next != null) {
-                node = node.next;
+        if(e != null) {
+            Node newNode = new Node(e);
+            if (!isEmpty()) {
+                tail.next = newNode;
+                tail = newNode;
+                ++nElements;
+                return true;
+            } else {
+                head = newNode;
+                tail = newNode;
+                ++nElements;
+                return true;
             }
-            node.next = newNode;
-            ++nElements;
-            return true;
         }
-        else
-        {
-            head = newNode;
-            ++nElements;
-            return true;
+        else {
+            throw new NullPointerException();
         }
     }
 
@@ -148,7 +163,7 @@ public class LinkedList<E> implements List<E> {
         if(!isEmpty() && index <= nElements) {
             E oldElement;
 
-            if(index - 1 != 0 ) {
+            if (index != 1 && index != nElements) {
                 Node node = head;
                 int cont = 0;
 
@@ -158,16 +173,26 @@ public class LinkedList<E> implements List<E> {
                 }
                 oldElement = node.next.element;
                 node.next = node.next.next;
-            }
-            else {
+            } else if(index == 1) {
                 oldElement = head.element;
                 head = head.next;
             }
+            else {
+                Node node = head;
+                int cont = 0;
+
+                while (node.next != null && nElements - 2 != cont) {
+                    node = node.next;
+                    ++cont;
+                }
+                oldElement = node.next.element;
+                node.next = null;
+                tail = node;
+            }
             --nElements;
             return oldElement;
-        }
-        else {
-            return null;
+        } else {
+            throw new IndexOutOfBoundsException("Position" + index + "does not exist.");
         }
     }
 
